@@ -22,12 +22,19 @@ class App extends Component {
   }
   // Notice what your map function is looping over and returning inside of Smurfs.
   // You'll need to make sure you have the right properties on state and pass them down to props.
+
+  updateState = (res) => {
+    this.setState({
+      smurfs: res,
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <Header />
-        <Route path="/form" render={ props => <SmurfForm {...props} />}/>
-        <Route path="/smurfs" render={ props => <Smurfs {...props} smurfs={this.state.smurfs} />}/>
+        <Route path="/form" render={ props => <SmurfForm {...props} updateState={this.updateState} />}/>
+        <Route exact path="/smurfs" render={ props => <Smurfs {...props} smurfs={this.state.smurfs} />}/>
       </div>
     );
   }

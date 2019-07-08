@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
     return (
       <div>
         <h1>Smurfs!</h1>
-        <Link to="/smurfs">Viw Smurfs</Link>
+        <Link to="/smurfs">View Smurfs</Link>
         <Link to="/form">Add Smurf</Link>
       </div>
     )

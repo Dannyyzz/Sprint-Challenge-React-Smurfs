@@ -11,21 +11,49 @@ class SmurfForm extends Component {
     };
   }
 
-  addSmurf = event => {
+  addUpdateSmurf = event => {
     event.preventDefault();
     // add code to create the smurf using the api
-    axios.post('http://localhost:3333/smurfs', this.state)
-    .then(res => {
+    if (this.props.updating) {axios.put(`http://localhost:3333/smurfs/${this.props.match.params.id}`, this.state)
+    .then( res => {
       this.props.updateState(res.data);
       this.props.history.push('/')
     })
-    .catch(err => console.log(err))
+    .catch( err => console.log(err))
+    return
+    } else {
+      axios.post('http://localhost:3333/smurfs', this.state)
+      .then(res => {
+        this.props.updateState(res.data);
+        this.props.history.push('/')
+      })
+      .catch(err => console.log(err))
+  }
 
     this.setState({
       name: '',
       age: '',
       height: ''
     });
+  }
+
+  componentDidMount() {
+    if (this.props.updating) {
+      const id = this.props.match.params.id;
+      const smurf = this.props.smurfs.find(smurf => `${smurf.id}` === id);
+
+       this.setState({
+        name: smurf.name,
+        age: smurf.age,
+        height: smurf.height
+      })
+    } else {
+      this.setState({
+        name: '',
+        age: '',
+        height: ''
+      })
+    }
   }
 
   handleInputChange = e => {
@@ -35,7 +63,7 @@ class SmurfForm extends Component {
   render() {
     return (
       <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+        <form onSubmit={this.addUpdateSmurf}>
           <input
             onChange={this.handleInputChange}
             placeholder="Name"
@@ -54,7 +82,7 @@ class SmurfForm extends Component {
             value={this.state.height}
             name="height"
           />
-          <button type="submit">Add to Smurf Village!</button>
+          <button type="submit">{this.props.update ? "Update" : "Add to Smurf Village!"}</button>
         </form>
       </div>
     );

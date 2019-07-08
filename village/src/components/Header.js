@@ -7,8 +7,8 @@ import { NavLink } from 'react-router-dom';
       <div>
         <h1>Smurfs!</h1>
         <hr></hr>
-        <NavLink to="/smurfs">View Smurfs </NavLink>
-        <NavLink to="/form">Add Smurf</NavLink>
+        <NavLink onClick={this.props.resetForm} to="/">View Smurfs </NavLink>
+        <NavLink onClick={this.props.resetForm} to="/smurf-form">Add Smurf</NavLink>
       </div>
     )
   }
